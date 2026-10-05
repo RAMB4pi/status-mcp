@@ -2,7 +2,13 @@
   "mcpServers": {
     "harthad-status": {
       "command": "node",
-      "args": ["/ABSOLUTE/PATH/TO/status-mcp/dist/src/server.js"]
+      "args": [
+        "/ABSOLUTE/PATH/TO/status-mcp/dist/src/server.js"
+      ],
+      "env": {
+        "STATUS_MCP_URL": "https://status.harthad.com/mcp",
+        "STATUS_MCP_TOKEN": "REPLACE_WITH_YOUR_ACCOUNT_CREDENTIAL"
+      }
     }
   }
 }

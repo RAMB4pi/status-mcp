@@ -1,11 +1,11 @@
 # ChatGPT integration plan
 
-This repository currently exposes stdio only. No remote MCP URL is available and this scaffold cannot yet be connected as a hosted ChatGPT integration. Implement remote MCP transport and OAuth before configuring a connector; do not use `api.status.harthad.com` as an MCP URL by assumption.
+The hosted endpoint is `https://status.harthad.com/mcp`, with an account-scoped bearer credential. A native ChatGPT connector still requires remote OAuth/discovery and registration, which are not implemented. Merely pasting this URL into a client that cannot supply bearer headers will not connect your account. `api.status.harthad.com` remains a planned address.
 
-Example conversation after integration is implemented:
+After connecting a compatible client, start with:
 
-> Lee mi perfil y contexto. Propón tres servicios que representen cómo organizo mi vida y espera a que elija los nombres y la visibilidad antes de crearlos. No infieras estados de salud ni publiques datos privados.
+> Ayúdame a iniciar mi Status con lo que sabes de mí en esta conversación. Revisa mi página y propón unos pocos servicios, sus estados actuales y una primera entrada. Pregunta solo lo indispensable y muéstrame la propuesta antes de publicar. No inventes datos ni publiques información privada.
 
-> Cambia Energy a degraded y registra “Semana intensa”.
+An explicit request such as “Cambia Energy a degraded y registra ‘Semana intensa’” must use `intent: explicit`, which records human provenance. A contextual autonomous update uses `intent: context`, which records AI provenance. Use the hosted schema from `tools/list`; draft REST schemas are not a deployed compatibility guarantee.
 
-The second prompt should result in one `create_changelog_entry` call so the backend changes status and records history atomically. Today each tool returns `NOT_IMPLEMENTED`.
+See [the connection guide](../../docs/local-preview.md) for supported bearer-header and stdio clients. The unconnected legacy scaffold still returns `NOT_IMPLEMENTED`.
