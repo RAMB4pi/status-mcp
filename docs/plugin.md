@@ -31,7 +31,7 @@ Review the proposal before the first publication. Later explicit requests count 
 - Scope: personal (`USER`), private (`PRIVATE`). Not a public directory submission.
 - Endpoint: `https://status.harthad.com/mcp`, Streamable HTTP, OAuth.
 
-The private plugin was saved by Plugin Creator on 2026-10-05. Account creation is distinct from installation and real OAuth authorization. Native ChatGPT tool discovery and a read-only call after connection still require verification in the user's account. Legacy REST stubs in `src/tools` are not the plugin runtime: the plugin discovers and executes the deployed tools directly. See [hosted semantics](local-preview.md) and [OAuth](auth.md).
+The private plugin was saved by Plugin Creator on 2026-10-05. Account creation is distinct from installation and real OAuth authorization. Native ChatGPT tool discovery and a read-only call after connection still require verification in the user's account. The hosted endpoint now imports the functional public tools in `src/tools`; there are no legacy stub handlers. The remote plugin keeps its existing URL and OAuth connection. See [hosted semantics](local-preview.md) and [OAuth](auth.md).
 
 Update this exact plugin and release rather than creating another Status plugin. Never put OAuth bearer tokens into the manifest or MCP configuration.
 

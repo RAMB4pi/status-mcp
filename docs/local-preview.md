@@ -24,7 +24,7 @@ The hosted MVP exposes Streamable HTTP MCP at `https://status.harthad.com/mcp`. 
 
 Never commit the credential. It expires in 30 days and can be revoked from the webapp. OAuth/discovery and dynamic ChatGPT client registration are now implemented in the hosted backend; native ChatGPT still needs live verification. The stdio bridge only forwards its supplied credential and does not perform OAuth.
 
-The bridge forwards the upstream tool list and input schemas, avoiding duplicate validation logic. The original unconnected scaffold remains available without `STATUS_MCP_URL`.
+The bridge forwards the upstream tool list and input schemas, avoiding duplicate validation logic. Without `STATUS_MCP_URL`, the stdio server executes the public tools against `STATUS_API_URL` (default `https://status.harthad.com/v1`) using `STATUS_ACCESS_TOKEN` or `STATUS_MCP_TOKEN`. There are no stub handlers.
 
 ## Attribution and publication semantics
 

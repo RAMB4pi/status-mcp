@@ -11,7 +11,7 @@ Hosted scopes:
 - `status:read`: profile, services, status, changelog and accessible context.
 - `status:write`: create services, publish entries/transitions and comment on accessible entries.
 
-The original `src/auth/index.ts` and REST schemas remain a legacy draft (including its separate `comments:write` scope). They do not obtain or validate remote OAuth tokens. The optional stdio bridge forwards an independently provided account bearer credential; it does not perform OAuth. Never commit credentials.
+`src/auth/index.ts` exports the current read/write scopes and reads local credentials. The old REST domain shapes remain a legacy draft. The public server does not issue or validate OAuth tokens; the private API enforces authorization. The optional stdio bridge forwards an independently provided account bearer credential; it does not perform OAuth. Never commit credentials.
 
 Local synthetic tests cover consent/login requirements, PKCE rejection, code replay, resource binding, scopes, rotation and revocation. Native ChatGPT and production OAuth end-to-end verification remain pending. Use the [ChatGPT guide](../examples/chatgpt/README.md).
 

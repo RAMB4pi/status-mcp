@@ -1,76 +1,64 @@
 # Harthad Status MCP
 
-Open-source integration for a personal status page: services, status changes, entries and comments.
+Functional open-source MCP server, API client and Status plugin for personal services, entries and linked state changes. Apache-2.0.
 
-## Status plugin
+## Architecture
 
-The private **Status** plugin connects directly to the deployed MCP with OAuth and includes a Spanish workflow for initial setup, publications and attribution. Its editable source is in `plugin/harthad-status`; build with `npm run package:plugin`. See [plugin creation and connection](docs/plugin.md). The hosted backend remains private.
-
-**Stage: MVP bridge plus legacy scaffold.** Set `STATUS_MCP_URL=https://status.harthad.com/mcp` and an account credential to discover and forward the hosted tools over stdio. The hosted app/API is now deployed. Without these variables the original ten draft tool handlers still return `NOT_IMPLEMENTED`. The hosted endpoint now implements remote OAuth and dynamic ChatGPT client registration. Native ChatGPT connection still needs end-to-end verification; see the connection guide. This package is not published to npm.
-
-## Open-source boundary
-
-Apache-2.0 covers this repository: MCP server, tool definitions, schemas (the initial Status Protocol), API client transport, auth scaffolding, examples, documentation and tests.
-
-The webapp, backend, databases, production infrastructure and hosted operations are **not open source** and are not included here. The current MVP serves web and backend together at `status.harthad.com`; `api.status.harthad.com` remains a planned address. MCP and web use the same backend. This repository never accesses the database directly.
+The ten real tools and their executable request schemas live in `src/tools/index.ts`. They call a private API boundary; there are no stub handlers. The hosted endpoint imports this same public package rather than maintaining a second tool implementation.
 
 ```text
-Compatible assistant → status-mcp → status.harthad.com/mcp → backend → database
-status.harthad.com                                       → backend → database
+ChatGPT / plugin → status.harthad.com/mcp → public MCP tools → private API → database
+Local assistant  → public stdio MCP      → private HTTP API → database
+Webapp                                  → private API     → database
 ```
 
-## Run locally
+Open source: MCP tool registration and dispatch, request validation, API transport, optional stdio bridge, plugin manifests, skill, icons, examples and tests.
 
-Requires Node.js 22 or newer.
+Private: webapp, OAuth/session issuance, API authorization, business logic, database access and hosting. No database SDK or credentials are shipped in this repository. The current API base is `https://status.harthad.com/v1`; `api.status.harthad.com` remains a planned address.
+
+## Run
+
+Node.js 22+ and Python 3 for optional plugin packaging.
 
 ```sh
 npm ci
 npm test
-npm start
 ```
 
-`npm test` compiles the project. For build only: `npm run build`. The stdio server waits for MCP messages; do not type ordinary text into it or log to stdout.
+For a stdio assistant, supply your own account credential through its environment:
+
+```sh
+STATUS_ACCESS_TOKEN='<your account credential>' npm start
+```
+
+`STATUS_API_URL` optionally selects another HTTPS API or a loopback development server. Missing credentials fail explicitly on startup rather than exposing nonfunctional tools. Logs belong on stderr; stdout is reserved for MCP.
+
+The remote plugin uses the host OAuth flow and needs no manually supplied token. See [plugin setup](docs/plugin.md), [ChatGPT](examples/chatgpt/README.md) and [auth](docs/auth.md). A saved plugin is distinct from a verified native ChatGPT connection.
+
+## Tools
+
+Read scope `status:read`: `get_profile`, `list_services`, `get_status`, `get_changelog`, `get_context`.
+
+Write scope `status:write`: `create_service`, `update_service`, `create_changelog_entry`, `create_entry`, `create_comment`.
+
+States: `operational`, `degraded`, `major_incident`. Visibility: `public`, `private`. Publishing intent: `explicit` (human request, even through MCP) or `context` (AI inference). The backend derives provenance, ownership, timestamps and linked transitions. An entry may contain zero or more state changes; changes generate the linked changelog atomically. See the [current API contract](docs/api-contract.md).
 
 ## Layout
 
-```text
-src/
-  tools/     # Ten validated MCP tool stubs
-  schemas/   # Public domain and request schemas + TypeScript types
-  client/    # HTTPS API transport with response validation
-  auth/      # Scope definitions and local token reader
-  server.ts  # stdio entrypoint
-examples/
-  chatgpt/   # Remote integration requirements and sample prompts
-  claude/    # Local stdio configuration
-docs/       # Expected API contract and OAuth plan
-tests/      # Schema, MCP discovery/stub and transport boundary tests
-```
+- `src/tools`: ten functional tools and current strict input schemas.
+- `src/client`: authenticated HTTPS API transport with credential containment and no retries.
+- `src/server.ts`: local stdio server; `src/bridge.ts`: optional upstream relay.
+- `src/schemas`: legacy draft domain shapes, explicitly separate from the current request contract.
+- `plugin/harthad-status`: editable remote plugin and Spanish workflow.
+- `scripts/package-plugin.py`: deterministic private-plugin archive builder.
+- `tests`: discovery, execution over HTTP, validation, API failures and transport boundaries.
 
-## MVP tools
+## Packaging
 
-| Tool | Intended scope |
-| --- | --- |
-| `get_profile`, `list_services`, `get_status`, `get_changelog`, `get_context` | `status:read` |
-| `create_service`, `update_service`, `create_changelog_entry`, `create_entry` | `status:write` |
-| `create_comment` | `comments:write` |
+`npm run package:plugin` creates `dist/harthad-status-plugin.zip` for Plugin Creator.
 
-Statuses: `operational`, `degraded`, `major_incident`. Visibility: `public`, `private`. Provenance: `user`, `ai` (record field `created_by`). Visibility must be chosen explicitly for writes. Author, owner, timestamps and previous status are backend-owned; the AI cannot forge them.
+`npm pack` creates the functional library with compiled source and Apache license. The private hosted repo pins this archive with a lockfile integrity hash. The package is not published to npm; the source is available on GitHub. Rebuild and deliberately update that dependency when changing the public runtime.
 
-Schemas are an initial **draft contract**, not a stable 1.0 protocol. See [API contract](docs/api-contract.md), [auth plan](docs/auth.md), [ChatGPT example](examples/chatgpt/README.md) and [Claude example](examples/claude/README.md).
-
-## Next steps
-
-1. Verify the implemented remote OAuth flow with a native ChatGPT connector end to end.
-2. Promote the discoverable hosted tool schema to a versioned public contract; the original REST schemas remain a legacy draft.
-3. Add paginated history and subscriber lists before expanding hosted MVP limits.
-
-Subscriptions, notifications, integrations, search, UI extensions and billing are deferred. Google login belongs to the hosted webapp/backend.
-
-## License
+The old REST proposal is retained as [historical draft](docs/legacy-api-contract.md), not a deployed compatibility guarantee. Pagination, subscriber tools and UI extensions are future work.
 
 [Apache License 2.0](LICENSE).
-
-## Connecting the hosted MVP
-
-See [the hosted connection guide](docs/local-preview.md) for an executable stdio-to-HTTP bridge, account credentials and current tool semantics. Without connection variables, tools retain the original scaffold behavior.
