@@ -1,4 +1,6 @@
-# Expected API contract — draft v0.1
+# Expected API contract — legacy draft v0.1
+
+> The running development integration is documented in [local-preview.md](local-preview.md). This legacy REST draft is not the contract of that implementation.
 
 Base URL: `https://api.status.harthad.com/v1`. This is a specification, not evidence of available endpoints. JSON requests/responses; dates are RFC 3339 with a timezone; identifiers are opaque strings. The canonical executable schemas are in [`src/schemas/index.ts`](../src/schemas/index.ts).
 
@@ -45,7 +47,7 @@ List query: `limit` integer 1–50, default 20; optional opaque `cursor`. Respon
 
 Request fields follow the exported `Create*Schema` and `UpdateServiceSchema`. `update_service` accepts `{ service_id, changes }` in MCP; the API body is `changes`. `create_comment` takes `entry_id` in the path and only `body` in the API body. Unknown request fields are rejected.
 
-The backend derives owner, author, timestamps and `created_by` from the authenticated account and client identity. MCP writes have `created_by: ai`; direct webapp writes have `created_by: user`. A browser must not be able to impersonate an MCP client or vice versa merely by supplying that field.
+The backend derives owner, author, timestamps and `created_by` from the authenticated account and client identity. Authorship follows intent rather than transport: explicit human requests are `user`, including through MCP; autonomous contextual publications are `ai`. The hosted development tools use `intent: explicit | context`, and the backend derives provenance from it and the authenticated client. Browser publications are always `user`.
 
 Status updates and changelog creation use one transaction. PATCH with a changed status creates exactly one changelog entry (generated title when no explicit title exists). POST `/me/changelog` changes the service status and records the transition in one transaction; it must not be preceded by a separate PATCH. `previous_status` is read from the current service under transaction. Unchanged status in POST `/me/changelog` returns 409; a same-status PATCH may change other fields without a changelog. Changelog visibility cannot exceed service visibility.
 

@@ -66,3 +66,7 @@ Subscriptions, notifications, integrations, search, UI extensions and billing ar
 ## License
 
 [Apache License 2.0](LICENSE).
+
+## Running local integration
+
+See [the hosted preview connection guide](docs/local-preview.md) for an executable stdio-to-HTTP bridge, account credentials and current tool semantics. Without connection variables, tools retain the original scaffold behavior.
