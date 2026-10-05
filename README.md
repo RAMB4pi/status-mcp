@@ -1,6 +1,10 @@
 # Harthad Status MCP
 
-Open-source integration scaffold for a personal status page: services, status changes, entries and comments.
+Open-source integration for a personal status page: services, status changes, entries and comments.
+
+## Status plugin
+
+The private **Status** plugin connects directly to the deployed MCP with OAuth and includes a Spanish workflow for initial setup, publications and attribution. Its editable source is in `plugin/harthad-status`; build with `npm run package:plugin`. See [plugin creation and connection](docs/plugin.md). The hosted backend remains private.
 
 **Stage: MVP bridge plus legacy scaffold.** Set `STATUS_MCP_URL=https://status.harthad.com/mcp` and an account credential to discover and forward the hosted tools over stdio. The hosted app/API is now deployed. Without these variables the original ten draft tool handlers still return `NOT_IMPLEMENTED`. The hosted endpoint now implements remote OAuth and dynamic ChatGPT client registration. Native ChatGPT connection still needs end-to-end verification; see the connection guide. This package is not published to npm.
 
