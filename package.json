@@ -12,7 +12,8 @@
     "build": "tsc",
     "typecheck": "tsc --noEmit",
     "start": "node dist/src/server.js",
-    "test": "npm run build && node --test dist/tests/*.test.js"
+    "test": "npm run build && node --test dist/tests/*.test.js",
+    "package:plugin": "python3 scripts/package-plugin.py"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.32.1",

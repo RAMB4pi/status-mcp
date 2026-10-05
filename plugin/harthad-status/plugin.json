@@ -1,0 +1,29 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "harthad-status",
+  "version": "0.1.0",
+  "description": "Read and update your personal Status: services, text entries and linked state changes.",
+  "author": {
+    "name": "Harthad",
+    "url": "https://harthad.com"
+  },
+  "homepage": "https://status.harthad.com",
+  "repository": "https://github.com/RAMB4pi/status-mcp",
+  "license": "Apache-2.0",
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Status",
+        "shortDescription": "Tu estado, día a día",
+        "longDescription": "Consulta tu estado personal, crea servicios y publica entradas con cambios de estado vinculados. Distingue solicitudes de la persona de inferencias de IA. Conecta tu cuenta de Harthad mediante OAuth.",
+        "developerName": "Harthad",
+        "category": "Productivity",
+        "logo": "./assets/logo.svg",
+        "composerIcon": "./assets/logo.svg",
+        "logoDark": "./assets/logo-dark.svg",
+        "composerIconDark": "./assets/logo-dark.svg",
+        "defaultPrompt": "Ayúdame a iniciar mi Status con lo que sabes de mí en esta conversación. Revisa mi página y propón unos pocos servicios, sus estados actuales y una primera entrada. Pregunta solo lo indispensable y muéstrame la propuesta antes de publicar. No inventes datos ni publiques información privada."
+      }
+    }
+  }
+}
