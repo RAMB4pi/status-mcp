@@ -4,7 +4,7 @@ The hosted endpoint is `https://status.harthad.com/mcp`. OAuth discovery, dynami
 
 1. Sign in at `https://status.harthad.com`, using your existing Harthad session when available.
 2. In ChatGPT's browser settings, open Apps and create an app; enable developer mode under advanced settings if needed. Availability depends on the account/workspace. See [OpenAI's developer mode guide](https://help.openai.com/en/articles/12584461-developer-mode-and-full-mcp-connectors-in-chatgpt).
-3. Use the name **Status by Harthad**, MCP URL **https://status.harthad.com/mcp**, and **OAuth** authentication. Leave advanced OAuth values at their defaults so dynamic registration can supply the client credentials.
+3. Use the name **Status**, MCP URL **https://status.harthad.com/mcp**, and **OAuth** authentication. Leave advanced OAuth values at their defaults so dynamic registration can supply the client credentials.
 4. Review ChatGPT's notice, create the connection, and authorize your account on the Status consent page.
 5. In a new chat, select Status and ask **¿Cuál es mi estado actual?** Then return to Status and select **Comprobar conexión**. Setup will not finish without a valid MCP initialization.
 
