@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "harthad-status": {
+      "command": "node",
+      "args": ["/ABSOLUTE/PATH/TO/status-mcp/dist/src/server.js"]
+    }
+  }
+}
