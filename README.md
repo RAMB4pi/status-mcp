@@ -2,7 +2,7 @@
 
 Open-source integration scaffold for a personal status page: services, status changes, entries and comments.
 
-**Stage: MVP bridge plus legacy scaffold.** Set `STATUS_MCP_URL=https://status.harthad.com/mcp` and an account credential to discover and forward the hosted tools over stdio. The hosted app/API is now deployed. Without these variables the original ten draft tool handlers still return `NOT_IMPLEMENTED`. Remote OAuth and native ChatGPT connector registration remain unimplemented. This package is not published to npm.
+**Stage: MVP bridge plus legacy scaffold.** Set `STATUS_MCP_URL=https://status.harthad.com/mcp` and an account credential to discover and forward the hosted tools over stdio. The hosted app/API is now deployed. Without these variables the original ten draft tool handlers still return `NOT_IMPLEMENTED`. The hosted endpoint now implements remote OAuth and dynamic ChatGPT client registration. Native ChatGPT connection still needs end-to-end verification; see the connection guide. This package is not published to npm.
 
 ## Open-source boundary
 
@@ -57,7 +57,7 @@ Schemas are an initial **draft contract**, not a stable 1.0 protocol. See [API c
 
 ## Next steps
 
-1. Implement remote OAuth and verify a native ChatGPT connector end to end.
+1. Verify the implemented remote OAuth flow with a native ChatGPT connector end to end.
 2. Promote the discoverable hosted tool schema to a versioned public contract; the original REST schemas remain a legacy draft.
 3. Add paginated history and subscriber lists before expanding hosted MVP limits.
 

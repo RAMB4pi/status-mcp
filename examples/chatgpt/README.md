@@ -1,6 +1,14 @@
 # ChatGPT integration plan
 
-The hosted endpoint is `https://status.harthad.com/mcp`, with an account-scoped bearer credential. A native ChatGPT connector still requires remote OAuth/discovery and registration, which are not implemented. Merely pasting this URL into a client that cannot supply bearer headers will not connect your account. `api.status.harthad.com` remains a planned address.
+The hosted endpoint is `https://status.harthad.com/mcp`. OAuth discovery, dynamic client registration, Authorization Code + PKCE, explicit account consent and token refresh are implemented in the private hosted backend. The protocol is tested locally with synthetic identities; native ChatGPT connection is still pending live verification. This repository supplies the optional stdio bridge and draft schemas, not the hosted authorization server. `api.status.harthad.com` remains a planned address.
+
+1. Sign in at `https://status.harthad.com`, using your existing Harthad session when available.
+2. In ChatGPT's browser settings, open Apps and create an app; enable developer mode under advanced settings if needed. Availability depends on the account/workspace. See [OpenAI's developer mode guide](https://help.openai.com/en/articles/12584461-developer-mode-and-full-mcp-connectors-in-chatgpt).
+3. Use the name **Status by Harthad**, MCP URL **https://status.harthad.com/mcp**, and **OAuth** authentication. Leave advanced OAuth values at their defaults so dynamic registration can supply the client credentials.
+4. Review ChatGPT's notice, create the connection, and authorize your account on the Status consent page.
+5. In a new chat, select Status and ask **¿Cuál es mi estado actual?** Then return to Status and select **Comprobar conexión**. Setup will not finish without a valid MCP initialization.
+
+Claude and Other remain coming soon in the product's onboarding. The existing stdio bridge remains available for technical experiments with an independently supplied bearer credential.
 
 After connecting a compatible client, start with:
 

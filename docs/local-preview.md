@@ -3,7 +3,7 @@
 The hosted MVP exposes Streamable HTTP MCP at `https://status.harthad.com/mcp`. It requires an account credential. Local development remains available at `http://127.0.0.1:5173/mcp`.
 
 1. Open `https://status.harthad.com` and sign in with Google, or continue with your existing Harthad session. For a synthetic local preview, start the private app with `npm run demo`.
-2. Open your page, use **Mi cuenta → Conectar asistente**, and explicitly generate an account-scoped credential.
+2. For ChatGPT, follow [the OAuth connection guide](../examples/chatgpt/README.md). The web setup now prioritizes this flow; Claude and Other are coming soon in its UI. The following bridge steps are for advanced clients with an independently supplied account credential. The owner-only `/v1/me/mcp-token` endpoint remains available to authenticated browser sessions for development, but is no longer part of default onboarding.
 3. For clients with custom HTTP headers: URL `https://status.harthad.com/mcp`, header `Authorization: Bearer <credential>`.
 4. For stdio clients, build this repository and configure:
 
@@ -22,7 +22,7 @@ The hosted MVP exposes Streamable HTTP MCP at `https://status.harthad.com/mcp`. 
 }
 ```
 
-Never commit the credential. It expires in 30 days and can be revoked from the webapp. Public OAuth/discovery and ChatGPT connector registration are not implemented. A client without bearer-header or stdio support cannot use this endpoint yet.
+Never commit the credential. It expires in 30 days and can be revoked from the webapp. OAuth/discovery and dynamic ChatGPT client registration are now implemented in the hosted backend; native ChatGPT still needs live verification. The stdio bridge only forwards its supplied credential and does not perform OAuth.
 
 The bridge forwards the upstream tool list and input schemas, avoiding duplicate validation logic. The original unconnected scaffold remains available without `STATUS_MCP_URL`.
 
