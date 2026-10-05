@@ -2,17 +2,17 @@
 
 Open-source integration scaffold for a personal status page: services, status changes, entries and comments.
 
-**Stage: initial MVP scaffold.** The server runs over stdio and exposes ten tools, but every handler currently returns `NOT_IMPLEMENTED`. No hosted API or OAuth flow is implemented, deployed or verified. This package is not published to npm.
+**Stage: MVP bridge plus legacy scaffold.** Set `STATUS_MCP_URL=https://status.harthad.com/mcp` and an account credential to discover and forward the hosted tools over stdio. The hosted app/API is now deployed. Without these variables the original ten draft tool handlers still return `NOT_IMPLEMENTED`. Remote OAuth and native ChatGPT connector registration remain unimplemented. This package is not published to npm.
 
 ## Open-source boundary
 
 Apache-2.0 covers this repository: MCP server, tool definitions, schemas (the initial Status Protocol), API client transport, auth scaffolding, examples, documentation and tests.
 
-The webapp at `status.harthad.com`, backend at `api.status.harthad.com`, databases, production infrastructure and hosted operations are **not open source** and are not included here. The MCP and webapp will share the same backend. This repository never accesses the database directly.
+The webapp, backend, databases, production infrastructure and hosted operations are **not open source** and are not included here. The current MVP serves web and backend together at `status.harthad.com`; `api.status.harthad.com` remains a planned address. MCP and web use the same backend. This repository never accesses the database directly.
 
 ```text
-ChatGPT / Claude → status-mcp → api.status.harthad.com → database
-status.harthad.com          → api.status.harthad.com → database
+Compatible assistant → status-mcp → status.harthad.com/mcp → backend → database
+status.harthad.com                                       → backend → database
 ```
 
 ## Run locally
@@ -55,11 +55,11 @@ Statuses: `operational`, `degraded`, `major_incident`. Visibility: `public`, `pr
 
 Schemas are an initial **draft contract**, not a stable 1.0 protocol. See [API contract](docs/api-contract.md), [auth plan](docs/auth.md), [ChatGPT example](examples/chatgpt/README.md) and [Claude example](examples/claude/README.md).
 
-## Launch next steps
+## Next steps
 
-1. Implement the hosted `/v1` contract with authorization, pagination and atomic status transitions.
-2. Implement OAuth and wire handlers through `StatusClient`; validate all response schemas.
-3. Add an authenticated remote MCP transport for ChatGPT and verify a real client end to end.
+1. Implement remote OAuth and verify a native ChatGPT connector end to end.
+2. Promote the discoverable hosted tool schema to a versioned public contract; the original REST schemas remain a legacy draft.
+3. Add paginated history and subscriber lists before expanding hosted MVP limits.
 
 Subscriptions, notifications, integrations, search, UI extensions and billing are deferred. Google login belongs to the hosted webapp/backend.
 
@@ -67,6 +67,6 @@ Subscriptions, notifications, integrations, search, UI extensions and billing ar
 
 [Apache License 2.0](LICENSE).
 
-## Running local integration
+## Connecting the hosted MVP
 
-See [the hosted preview connection guide](docs/local-preview.md) for an executable stdio-to-HTTP bridge, account credentials and current tool semantics. Without connection variables, tools retain the original scaffold behavior.
+See [the hosted connection guide](docs/local-preview.md) for an executable stdio-to-HTTP bridge, account credentials and current tool semantics. Without connection variables, tools retain the original scaffold behavior.
