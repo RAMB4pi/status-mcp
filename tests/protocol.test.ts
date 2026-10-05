@@ -13,9 +13,9 @@ test("requests reject forged ownership/provenance and invalid status values", ()
   assert.equal(UpdateServiceSchema.safeParse({}).success, false);
   assert.equal(CreateEntrySchema.safeParse({ body: "hello", visibility: "private" }).success, true);
 });
-test("all ten tools are discoverable and a write returns an explicit stub error", async () => {
+test("all ten tools are discoverable and execute validated API operations", async () => {
   const server = new McpServer({ name: "test", version: "0.1.0" });
-  registerTools(server);
+  registerTools(server, {async execute(name, input) { return {name,input}; }});
   const client = new Client({ name: "test-client", version: "0.1.0" });
   const [a, b] = InMemoryTransport.createLinkedPair();
   await server.connect(a);
@@ -23,9 +23,9 @@ test("all ten tools are discoverable and a write returns an explicit stub error"
   try {
     const result = await client.listTools();
     assert.deepEqual(result.tools.map(t => t.name).sort(), toolDefinitions.map(t => t.name).sort());
-    const call = await client.callTool({ name: "create_entry", arguments: { body: "hello", visibility: "private" } });
-    assert.equal(call.isError, true);
-    assert.match(JSON.stringify(call.content), /NOT_IMPLEMENTED/);
+    const call = await client.callTool({ name: "create_entry", arguments: { body: "hello", visibility: "private", intent: "explicit" } });
+    assert.notEqual(call.isError, true);
+    assert.match(JSON.stringify(call.content), /create_entry/);
     const invalid = await client.callTool({ name: "create_entry", arguments: { body: "hello", visibility: "private", owner_id: "other" } });
     assert.equal(invalid.isError, true);
   } finally { await client.close(); await server.close(); }

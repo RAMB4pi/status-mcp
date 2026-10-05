@@ -1,8 +1,8 @@
 {
   "name": "@harthad/status-mcp",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
-  "description": "Open-source MCP scaffold and API contract for Harthad Status",
+  "description": "Open-source functional MCP server and plugin for Harthad Status",
   "type": "module",
   "license": "Apache-2.0",
   "engines": {
@@ -13,7 +13,8 @@
     "typecheck": "tsc --noEmit",
     "start": "node dist/src/server.js",
     "test": "npm run build && node --test dist/tests/*.test.js",
-    "package:plugin": "python3 scripts/package-plugin.py"
+    "package:plugin": "python3 scripts/package-plugin.py",
+    "prepack": "npm run build"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.32.1",
@@ -22,5 +23,14 @@
   "devDependencies": {
     "@types/node": "^22.0.0",
     "typescript": "~5.9.3"
-  }
+  },
+  "exports": {
+    ".": "./dist/src/tools/index.js",
+    "./client": "./dist/src/client/index.js"
+  },
+  "files": [
+    "dist/src",
+    "LICENSE",
+    "README.md"
+  ]
 }

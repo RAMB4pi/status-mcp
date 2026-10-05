@@ -1,4 +1,4 @@
-export const scopes = ["status:read", "status:write", "comments:write"] as const;
+export const scopes = ["status:read", "status:write"] as const;
 export type Scope = typeof scopes[number];
 
 // Local development only. OAuth acquisition, refresh and consent are not implemented.
