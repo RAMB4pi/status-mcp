@@ -23,14 +23,14 @@ export const ChangelogEntrySchema = z.strictObject({
   ...AuthoredFields, service_id: IdSchema, previous_status: StatusSchema,
   status: StatusSchema, title: z.string().min(1).max(200), body: BodySchema.optional(),
 });
-export const EntrySchema = z.strictObject({ ...AuthoredFields, body: BodySchema });
+export const EntrySchema = z.strictObject({ ...AuthoredFields, body: BodySchema, private_details: BodySchema.optional() });
 export const CommentSchema = z.strictObject({ ...AuthoredFields, entry_id: IdSchema, body: BodySchema });
 
 // Request schemas exclude backend-owned identity, provenance and timestamps.
 export const CreateServiceSchema = ServiceSchema.pick({ name: true, description: true, status: true, visibility: true });
 export const UpdateServiceSchema = CreateServiceSchema.partial().refine(value => Object.keys(value).length > 0, "At least one field is required");
 export const CreateChangelogEntrySchema = ChangelogEntrySchema.pick({ service_id: true, status: true, title: true, body: true, visibility: true });
-export const CreateEntrySchema = EntrySchema.pick({ body: true, visibility: true });
+export const CreateEntrySchema = EntrySchema.pick({ body: true, visibility: true, private_details: true });
 export const CreateCommentSchema = CommentSchema.pick({ body: true });
 export type Profile = z.infer<typeof ProfileSchema>;
 export type Service = z.infer<typeof ServiceSchema>;
