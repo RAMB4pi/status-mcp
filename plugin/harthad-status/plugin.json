@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "harthad-status",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Read and update your personal Status: services, text entries and linked state changes.",
   "author": {
     "name": "Harthad",
@@ -22,7 +22,7 @@
         "composerIcon": "./assets/logo.svg",
         "logoDark": "./assets/logo-dark.svg",
         "composerIconDark": "./assets/logo-dark.svg",
-        "defaultPrompt": "Ayúdame a crear mi Status con el contexto sobre mí que tengas disponible. Prepara los pilares, sus componentes y las primeras entradas sin que yo tenga que dirigir cada paso. Si falta contexto o no puedes respaldar los estados, hazme una sola pregunta breve y agrupada sobre qué me importa y cómo voy. Usa solo Operativo, Capacidad reducida o Incidente mayor. Muéstrame una propuesta completa para una sola aprobación, con su visibilidad y una opción de seguimiento automático en las conversaciones donde Status esté activo. No crees ni publiques nada hasta que la apruebe."
+        "defaultPrompt": "Ayúdame a crear mi Status con todo el contexto sobre mí que tengas disponible. Prepara mis pilares y componentes y una cronología de 20–50 entradas útiles de los últimos 30 días, con fechas respaldadas, visibilidad y cambios de estado vinculados cuando haya evidencia de una transición. Si no alcanza el contexto, pídeme en un solo bloque breve notas o hitos del último mes antes de cerrar la propuesta; indica cuántas entradas puedes respaldar y qué falta. No inventes historia ni rellenes con duplicados. Usa solo Operativo, Capacidad reducida o Incidente mayor y no deduzcas estados de la ausencia de problemas o de objetivos pendientes. Muéstrame la cronología completa y el alcance del seguimiento para una sola aprobación; después ejecuta lo aprobado."
       }
     }
   }
