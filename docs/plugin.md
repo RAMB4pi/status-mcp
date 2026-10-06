@@ -19,7 +19,7 @@ The last command validates the portable manifest, contained square icons, skill 
 3. In a new conversation select Status and ask: **¿Cuál es mi estado actual?** This is a read-only connection check.
 4. Then use:
 
-> Ayúdame a iniciar mi Status con lo que sabes de mí en esta conversación. Revisa mi página y propón unos pocos servicios, sus estados actuales y una primera entrada. Pregunta solo lo indispensable y muéstrame la propuesta antes de publicar. No inventes datos ni publiques información privada.
+> Ayúdame a iniciar mi Status usando todo el contexto sobre mí que tengas disponible en ChatGPT, incluida la memoria y el contexto de proyectos o conversaciones accesible. Revisa mi página y el límite de mi plan; propón hasta 3 servicios principales (hasta 5 si tengo Pro). Reconstruye los últimos 30 días con un objetivo de 20 a 50 entradas breves, fechadas y vinculadas a cambios de estado solo cuando haya evidencia. No inventes eventos, fechas ni estados para completar la cantidad; señala los huecos y distingue hechos de inferencias. No publiques información privada. Muéstrame los servicios, la cronología y la visibilidad para aprobarlos antes de crear o publicar nada.
 
 Review the proposal before the first publication. Later explicit requests count as human intent. Context-derived automatic updates count as AI intent and need prior authorization. Entries generate linked changelog records only when they change service states.
 

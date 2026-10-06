@@ -10,10 +10,12 @@ Usa las herramientas del MCP conectado de Status. La autenticación ocurre media
 ## Iniciar una página
 
 1. Llama `get_context` sin username para revisar la cuenta conectada y sus servicios actuales. No recrees servicios que ya existen.
-2. Usa únicamente hechos de esta conversación y el contexto accesible que la persona haya proporcionado. No afirmes acceso a otras conversaciones, memoria completa, sensores o historial no consultado.
-3. Propón unos pocos servicios útiles, estados iniciales y una primera entrada. Pregunta solo lo indispensable; evita cuestionarios genéricos y datos inventados. Muestra la propuesta antes de la primera publicación.
-4. Con autorización de la persona, crea los servicios necesarios con `create_service`. Utiliza los IDs devueltos para la publicación. No asumas IDs a partir de nombres.
-5. Publica con `create_entry` y resume el resultado confirmado. Enlaza la página usando el username real del perfil y `https://status.harthad.com/<username>`.
+2. Usa todo el contexto que el host tenga disponible: conversación, memoria y contexto accesible de proyectos u otras conversaciones. No afirmes acceso completo al historial ni inventes fuentes. Si falta evidencia, señala los huecos y pide solo el contexto indispensable.
+3. Revisa `profile.serviceLimit`: máximo 3 servicios principales Free o 5 Pro. Agrupa áreas útiles; no crees un servicio por cada proyecto pequeño. No asumas estado operativo por ausencia de incidentes.
+4. Propón una cronología del último mes, con objetivo de 20–50 entradas breves solo cuando haya suficiente evidencia. No rellenes días ni cuotas, ni inventes fechas o estados. Distingue hechos e inferencias; las inferencias siguen siendo IA aunque la persona apruebe la reconstrucción. Muestra servicios, fechas, estados, fuentes disponibles y visibilidad antes de publicar.
+5. Tras aprobación, crea los servicios con `started_at` respaldado por el contexto (últimos 31 días). Si no sabes el estado inicial, pregunta. Usa los IDs devueltos. Publica entradas con `occurred_at`, desde la más antigua a la más reciente; agrega `changes` solo si se conoce una transición. Los días sin evidencia permanecen sin datos; el último estado conocido puede persistir, pero no implica medición diaria.
+6. Para reconstrucciones redactadas por la IA usa `intent: "context"`; la aprobación autoriza la publicación y no cambia la autoría de la reconstrucción. Para texto y cambio concretos dictados por la persona usa `explicit`. No publiques privacidad, salud sensible o información de terceros sin autorización específica.
+7. Revisa `get_context` antes de continuar un lote interrumpido: devuelve hasta 50 entradas recientes. No repitas una escritura incierta. Resume cuántas entradas se confirmaron y cuáles faltan; enlaza la página con el username real.
 
 ## Consultar
 
@@ -32,7 +34,7 @@ Usa la herramienta más pequeña que responda a la solicitud. Conserva fechas y 
 - `intent: "explicit"`: la persona pidió esa publicación o cambio concreto, aunque se ejecute por MCP. Cuenta como publicación de la persona.
 - `intent: "context"`: la IA infiere el cambio del contexto y actúa dentro de una autorización previa para ese tipo de actualización automática. Cuenta como IA. Sin esa autorización, propón el cambio y espera la decisión de la persona.
 
-La procedencia depende de la intención, no de usar web o MCP. Es una declaración de intención, no una prueba criptográfica. Nunca envíes IDs de propietario, author, timestamps, provenance o estado anterior: el servidor los asigna.
+La procedencia depende de la intención, no de usar web o MCP. Es una declaración de intención, no una prueba criptográfica. Nunca envíes IDs de propietario, author, createdAt, recordedAt, provenance o estado anterior: el servidor los asigna. Para reconstruir fechas respaldadas usa exclusivamente occurred_at en create_entry y started_at en create_service (últimos 31 días, nunca futuro).
 
 Estados: `operational`, `degraded`, `major_incident`. Son etiquetas personales; no diagnostiques salud ni uses porcentajes como mediciones médicas.
 
