@@ -29,9 +29,9 @@ export const CommentSchema = z.strictObject({ ...AuthoredFields, entry_id: IdSch
 // Request schemas exclude backend-owned identity, provenance and timestamps.
 export const CreateServiceSchema = ServiceSchema.pick({ name: true, description: true, status: true, visibility: true });
 export const UpdateServiceSchema = CreateServiceSchema.partial().refine(value => Object.keys(value).length > 0, "At least one field is required");
-export const CreateChangelogEntrySchema = ChangelogEntrySchema.pick({ service_id: true, status: true, title: true, body: true, visibility: true });
-export const CreateEntrySchema = EntrySchema.pick({ body: true, visibility: true, private_details: true });
-export const CreateCommentSchema = CommentSchema.pick({ body: true });
+export const CreateChangelogEntrySchema = ChangelogEntrySchema.pick({ service_id: true, status: true, title: true, body: true, visibility: true }).extend({body:z.string().trim().min(1).max(1000).optional()});
+export const CreateEntrySchema = EntrySchema.pick({ body: true, visibility: true, private_details: true }).extend({body:z.string().trim().min(1).max(1000),private_details:z.string().trim().max(5000).optional()});
+export const CreateCommentSchema = CommentSchema.pick({ body: true }).extend({body:z.string().trim().min(1).max(1000)});
 export type Profile = z.infer<typeof ProfileSchema>;
 export type Service = z.infer<typeof ServiceSchema>;
 export type ChangelogEntry = z.infer<typeof ChangelogEntrySchema>;

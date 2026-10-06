@@ -35,3 +35,12 @@ test("API credentials cannot be sent to another origin or outside /v1", async ()
   await assert.rejects(() => client.request("GET", "https://example.com/", StatusSchema), /configured API base/);
   await assert.rejects(() => client.request("GET", "../me", StatusSchema), /configured API base/);
 });
+
+test("entry limits agree for create, revisions and transition tools", () => {
+  const definition = (name: string) => toolDefinitions.find(t => t.name === name)!.schema;
+  assert.equal(CreateEntrySchema.safeParse({body:"a".repeat(1001),visibility:"public"}).success,false);
+  assert.equal(definition("create_entry").safeParse({body:"a".repeat(1000),intent:"explicit",private_details:"b".repeat(5000)}).success,true);
+  assert.equal(definition("create_entry").safeParse({body:"a".repeat(1001),intent:"explicit"}).success,false);
+  assert.equal(definition("revise_status").safeParse({idempotency_key:"key",operations:[{action:"edit_entry",id:"entry",private_details:"b".repeat(5001)}]}).success,false);
+  assert.equal(definition("update_service").safeParse({service_id:"service",status:"degraded",body:"a".repeat(1001),intent:"explicit"}).success,false);
+});

@@ -92,3 +92,7 @@ Antes de preparar una actualización comunica activity preparing; antes de escri
 ## Tarea programada y comprobación
 
 El seguimiento periódico se configura en https://chatgpt.com/scheduled con la conexión de Status disponible para la tarea y las fuentes autorizadas. Crear o copiar instrucciones no verifica una ejecución. Desde una ejecución real de esa tarea, consulta get_context, respeta mode/topics y verifica el resultado de cualquier escritura; si no hay novedades, no inventes publicaciones. Cuando el acceso esté comprobado y el modo elegido, llama assistant_control con scheduled_verified true, incluso si no hay novedades. La página ocultará la advertencia de configuración y conservará scheduledVerifiedAt solo para el propietario. scheduled_verified false permite borrar la comprobación; mode disabled también la borra. Este registro acredita una ejecución pasada, no acceso a todo ChatGPT ni garantía de futuras ejecuciones; Status no detecta automáticamente pausas o eliminación en ChatGPT. En modo proposals, esta confirmación de configuración no autoriza publicar entradas.
+
+## Límites de texto
+
+Cada resumen de entrada admite como máximo 1.000 caracteres; los detalles privados, 5.000. Resume antes de publicar o corregir. Si el servidor responde 429, respeta Retry-After y evita reintentos inmediatos.
