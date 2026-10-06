@@ -47,3 +47,6 @@ A 20–50 entry reconstruction is a context-dependent target, not a quota. The M
 ## Per-pillar plan limits (runtime 0.4.1)
 
 Owner-only `profile.componentLimit` accompanies `serviceLimit`. Free allows 3 root pillars with 3 components each (12 nodes maximum); Pro 5 with 5 each (30 nodes maximum). Each parent cap is independent; excess creation is rejected before mutation or save. Only two levels are accepted. Existing data is retained; over-limit pillars cannot receive additional components. The authenticated backend plan is authoritative, never tool inputs. These caps are ceilings, not bootstrap quotas.
+
+### Scheduled follow-up verification
+assistant_control accepts optional scheduled_verified boolean. True records the server timestamp of a checked scheduled run when mode is not disabled. False and mode disabled clear it. The owner-only context exposes scheduledVerifiedAt. It does not query the ChatGPT scheduler or prove future runs.
