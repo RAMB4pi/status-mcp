@@ -28,16 +28,17 @@ test('all public tools execute over HTTP with bearer auth; schema rejection occu
   update_service:{service_id:'energy',status:'degraded',body:'Changed',intent:'context'},
   create_changelog_entry:{service_id:'energy',status:'operational',body:'Recovered',intent:'explicit'},
   create_comment:{entry_id:'entry',body:'Hello'},
+  revise_status:{idempotency_key:'revision-1',operations:[{action:'archive_entry',id:'entry'}]},
  };
  try {
-  const tools=await client.listTools();assert.equal(tools.tools.length,10);
+  const tools=await client.listTools();assert.equal(tools.tools.length,toolDefinitions.length);
   for (const t of toolDefinitions) {
    const r=await client.callTool({name:t.name,arguments:fixtures[t.name] as Record<string,unknown>||{}});
    assert.notEqual(r.isError,true);assert.match(JSON.stringify(r.content),new RegExp(t.name));
   }
-  assert.equal(calls.length,10);
+  assert.equal(calls.length,toolDefinitions.length);
   const invalid=await client.callTool({name:'create_entry',arguments:{body:'x',intent:'context',owner_id:'someone-else'}});
-  assert.equal(invalid.isError,true);assert.equal(calls.length,10);
+  assert.equal(invalid.isError,true);assert.equal(calls.length,toolDefinitions.length);
  } finally {await client.close();await server.close();http.close();}
 });
 test('backend failures are errors, not successful publications, and do not leak response secrets',async()=>{
