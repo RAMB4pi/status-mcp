@@ -28,3 +28,12 @@ The API returns 401 for invalid/missing credentials, 403 for insufficient scope,
 Successful integration operations mark the assistant connection; merely creating a credential does not. Remote OAuth metadata and `/mcp` endpoint remain unchanged. See [OAuth](auth.md).
 
 The original speculative REST design is retained in [legacy-api-contract.md](legacy-api-contract.md) for historical reference only.
+
+
+## Month reconstruction (runtime 0.3.0)
+
+`get_context` returns up to 50 recent entries and owner-only `profile.plan` / `profile.serviceLimit`. Free allows 3 root services, Pro 5; plan is assigned only by the hosted backend, never tool arguments. Pro billing is not implemented. Components retain a separate storage cap.
+
+`create_service.started_at` and `create_entry.occurred_at` are optional ISO datetimes, no older than 31 days and never future. Dates must come from evidence; omitting them uses now. Create initial services at the start of a supported timeline and publish transitions oldest first. A transition older than a service history or its latest transition is rejected without mutation. Entries without transitions can be backdated independently. `createdAt` is the effective event date, `recordedAt` is the actual publication time. Graphs link transitions on their effective day. Unknown days before the first observation stay empty; state carry-forward is not a daily measurement. Repeated ambiguous writes are not retried.
+
+A 20–50 entry reconstruction is a context-dependent target, not a quota. The MCP cannot retrieve ChatGPT chat history; it uses context supplied by the host. AI reconstructions keep AI provenance even after approval. Explicit user-dictated text remains user provenance.
