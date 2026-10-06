@@ -28,6 +28,7 @@ test('all public tools execute over HTTP with bearer auth; schema rejection occu
   update_service:{service_id:'energy',status:'degraded',body:'Changed',intent:'context'},
   create_changelog_entry:{service_id:'energy',status:'operational',body:'Recovered',intent:'explicit'},
   create_comment:{entry_id:'entry',body:'Hello'},
+  assistant_control:{activity:'preparing'},
   revise_status:{idempotency_key:'revision-1',operations:[{action:'archive_entry',id:'entry'}]},
  };
  try {
