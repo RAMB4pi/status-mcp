@@ -42,3 +42,8 @@ A 20–50 entry reconstruction is a context-dependent target, not a quota. The M
 ## Pillars and expandable components (runtime 0.4.0)
 
 `create_service.parent_id` optionally attaches a component to an existing root service in the connected account. Omit it for a pillar. Free/Pro limits count roots only (3/5); the storage cap remains 30 total nodes. Nested components and foreign/missing parent IDs are rejected before mutation. A component cannot start before its pillar. Response uses the existing `parentId` field consumed by the web accordion. On creation, parent history is aggregated from observed child histories, preserving transition links; child updates continue to propagate the most severe state. No automatic personal category or health claim is inferred by the API. The assistant proposes life pillars based on accessible context and asks for missing areas rather than splitting one company into every root.
+
+
+## Per-pillar plan limits (runtime 0.4.1)
+
+Owner-only `profile.componentLimit` accompanies `serviceLimit`. Free allows 3 root pillars with 3 components each (12 nodes maximum); Pro 5 with 5 each (30 nodes maximum). Each parent cap is independent; excess creation is rejected before mutation or save. Only two levels are accepted. Existing data is retained; over-limit pillars cannot receive additional components. The authenticated backend plan is authoritative, never tool inputs. These caps are ceilings, not bootstrap quotas.
